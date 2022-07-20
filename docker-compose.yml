@@ -18,7 +18,7 @@ services:
       - ./scripts:/data
     environment:
       databasename: "TEST"
-    command: ["-c", "${CONNECTION_STRING}", "-f", "/data"]
+    command: ["-c", "Server=db;Database=${DATABASE_NAME};User Id=SA;Password=${SA_PASSWORD};", "-f", "/data"]
 
 volumes:
     mssqlsystem:
