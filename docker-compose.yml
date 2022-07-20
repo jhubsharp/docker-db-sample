@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports: 
+    - ${LOCAL_PORT}:1433
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: ${SA_PASSWORD}
+      PATH: /opt/mssql-tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    volumes: 
+    - mssqlsystem:/var/opt/mssql
+    - mssqluser:/var/opt/sqlserver
+  roundhouse:
+    image: dotnetroundhouse/roundhouse
+    depends_on:
+      - db
+    volumes:
+      - ./scripts:/data
+    environment:
+      databasename: "TEST"
+    command: ["-c", "${CONNECTION_STRING}", "-f", "/data"]
+
+volumes:
+    mssqlsystem:
+    mssqluser:

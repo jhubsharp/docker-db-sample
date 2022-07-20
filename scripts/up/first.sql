@@ -1,0 +1,1 @@
+create table Hello (name varchar(50))
